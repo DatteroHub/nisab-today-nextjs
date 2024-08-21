@@ -8,7 +8,7 @@ const Hero = () => {
         <a href="/">
           <Image
             src="/logo.svg"
-            alt="zakkini icon"
+            alt="zakat today logo"
             width="48"
             height="48"
             className="w-20"

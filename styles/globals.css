@@ -85,3 +85,6 @@
 .to-gradient {
   --tw-gradient-to: #ffe284 var(--tw-gradient-to-position);
 }
+.my-primary-color {
+  color: #ffba19;
+}

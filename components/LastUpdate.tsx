@@ -17,7 +17,7 @@ const LastUpdate = () => {
   return (
     <>
       {loading || !data ? (
-        <Skeleton className="h-20 w-full lg:w-44 rounded-3xl" />
+        <Skeleton className="h-20 w-44 rounded-3xl" />
       ) : (
         <TooltipProvider>
           <Tooltip>
