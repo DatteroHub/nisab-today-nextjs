@@ -7,22 +7,22 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
-import useNisabPrices from "@/utils/hooks/useNisabPrices";
 import { Skeleton } from "./ui/skeleton";
 import { format, formatDistanceToNow } from "date-fns";
+import { useGetNisabs } from "@/utils/hooks/useGetNisabs";
 
 const LastUpdate = () => {
-  const { data, loading } = useNisabPrices();
+  const { data, isPending } = useGetNisabs();
 
   return (
     <>
-      {loading || !data ? (
+      {isPending || !data ? (
         <Skeleton className="h-20 w-44 rounded-3xl" />
       ) : (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Alert className="pr-6 text-green-600 border-green-600 rounded-3xl">
+              <Alert className="pr-6 text-green-600 border-green-600 rounded-3xl animate-pulse">
                 <BadgeCheck className="h-5 w-5" color="#16a34a" />
                 <AlertTitle>Last update</AlertTitle>
                 <AlertDescription>

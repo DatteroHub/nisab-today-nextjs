@@ -15,7 +15,7 @@ import {
 import { Badge } from "./ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
-import useNisabPrices from "@/utils/hooks/useNisabPrices";
+import { useGetNisabs } from "@/utils/hooks/useGetNisabs";
 import { Skeleton } from "./ui/skeleton";
 
 type SingleNisab = {
@@ -28,7 +28,7 @@ type SingleNisab = {
 };
 
 const NisabList = () => {
-  const { data, loading } = useNisabPrices();
+  const { data, isPending } = useGetNisabs();
 
   const [nisabs, setNisabs] = useState<SingleNisab[]>([]);
   const [selectedMetal, setSelectedMetal] = useState("gold");
@@ -113,17 +113,18 @@ const NisabList = () => {
           orientation="vertical"
           className="sticky hidden lg:block top-10 mx-4 mt-2 h-64 w-0.5 rounded-full bg-slate-200"
         />
-        {loading || !nisabs.length ? (
+        {isPending || !nisabs.length ? (
           <div className="w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {Array.from(Array(8)).map(() => {
-              return <Skeleton className="h-56 rounded-3xl" />;
+            {Array.from(Array(8)).map((_, index) => {
+              return <Skeleton key={index} className="h-56 rounded-3xl" />;
             })}
           </div>
         ) : (
           <div className="w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filteredData.map((currency) => {
+            {filteredData.map((currency, index) => {
               return (
                 <Card
+                  key={index}
                   className={`rounded-3xl h-full border-2 ${
                     selectedMetal == "gold"
                       ? "border-amber-500"
