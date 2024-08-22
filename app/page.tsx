@@ -2,6 +2,8 @@ import NisabList from "@/components/NisabList";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
 
+export const runtime = "edge";
+
 export default function Home() {
   return (
     <>

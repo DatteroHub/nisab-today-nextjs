@@ -19,7 +19,7 @@ const Hero = () => {
         <h3 className="text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
           Nisab Today
         </h3>
-        <p className="text-lg text-muted-foreground">
+        <p className="text-lg text-muted-foreground leading-relaxed lg:leading-normal">
           Find islamic nisab value, for{" "}
           <span className="bg-amber-100 px-2 py-1">every currency</span>,{" "}
           <span className="bg-blue-100 px-2 py-1">every country</span>, updated{" "}
