@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   },
   description:
     "Find islamic nisab value, for every currency, every country, updated everyday.",
+  metadataBase: new URL("https://nisabtoday.org"),
   keywords: [
     "nissab",
     "nisab",
