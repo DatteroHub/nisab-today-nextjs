@@ -24,7 +24,7 @@ export default function useNisabPrices() {
         setLoading(true);
         const response = await fetch(NISAB_API_URL, {
           method: 'GET',
-          headers: { "x-api-key": process.env.NISAB_API_KEY! },
+          headers: { "x-api-key": process.env.NEXT_PUBLIC_NISAB_API_KEY! },
         });
         const json = await response.json();
         if (json && json.success) {
