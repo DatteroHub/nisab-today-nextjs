@@ -78,13 +78,10 @@
 }
 
 .from-gradient {
-  --tw-gradient-from: #ffba19 var(--tw-gradient-from-position);
+  --tw-gradient-from: #e64b00 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(59 130 246 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .to-gradient {
-  --tw-gradient-to: #ffe284 var(--tw-gradient-to-position);
-}
-.my-primary-color {
-  color: #ffba19;
+  --tw-gradient-to: #feff23 var(--tw-gradient-to-position);
 }

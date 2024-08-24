@@ -14,19 +14,21 @@ const Footer = () => {
                 alt="zakat today logo"
                 width="48"
                 height="48"
-                className="w-12"
+                className="w-16"
               />
             </a>
           </div>
-          <div className="text-lg font-bold my-primary-color mt-2">
+          <div className="text-lg mt-1 font-bold bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
             Nisab Today
           </div>
-          <div className="text-md text-muted-foreground">
+          <div className="text-md mt-1 text-muted-foreground">
             Created to find islamic nisab easily, and always up to date!
           </div>
         </div>
-        <div className="grid lg:ml-auto">
-          <div className="text-md text-gray-700 font-bold">Links</div>
+        <div className="flex flex-col gap-3 lg:ml-auto">
+          <div className="text-md mb-4 lg:mb-5 text-gray-700 font-bold">
+            Links
+          </div>
           <Link
             href="/privacy-policy"
             className="text-sm text-muted-foreground hover:text-foreground hover:underline"
@@ -34,13 +36,22 @@ const Footer = () => {
             Privacy Policy
           </Link>
         </div>
-        <div className="grid">
-          <div className="text-md text-gray-700 font-bold">Other projects</div>
+        <div className="flex flex-col gap-2">
+          <div className="text-md mb-4 text-gray-700 font-bold">
+            Other projects
+          </div>
           <Link
             href="#"
-            className="text-sm text-muted-foreground hover:text-foreground hover:underline pointer-events-none"
+            className="flex items-center text-sm text-muted-foreground hover:text-foreground hover:underline pointer-events-none"
           >
-            Zakkini (coming soon..)
+            <Image
+              src="/zakkini-logo.png"
+              alt="zakkini logo"
+              width="48"
+              height="48"
+              className="w-10 h-10 mr-2"
+            />
+            Zakkini (soon..)
           </Link>
         </div>
       </div>

@@ -26,7 +26,7 @@ const page = () => {
         <div className="text-foreground text-4xl font-bold">Privacy Policy</div>
         <div className="grid text-muted-foreground text-md gap-6">
           <p>
-            <span className="font-bold">Last Updated:</span> 22 August 2024.
+            <span className="font-bold">Last Update:</span> 22 August 2024.
           </p>
           <p>
             Welcome to <span className="font-bold">Nisab Today.</span> This

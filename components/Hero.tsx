@@ -9,14 +9,14 @@ const Hero = () => {
           <Image
             src="/logo.svg"
             alt="zakat today logo"
-            width="48"
-            height="48"
-            className="w-20"
+            width="56"
+            height="56"
+            className="w-28"
           />
         </a>
       </div>
       <div className="grid gap-3 items-center">
-        <h3 className="text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
+        <h3 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
           Nisab Today
         </h3>
         <p className="text-lg text-muted-foreground leading-relaxed lg:leading-normal">
