@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "@/styles/globals.css";
 import Provider from "./_provider";
 
+export const runtime = "edge";
+
 const poppins = Poppins({
   weight: ["300", "400", "500", "600"],
   subsets: ["latin"],
@@ -16,6 +18,8 @@ export const metadata: Metadata = {
   description:
     "Find islamic nisab value, for every currency, every country, updated everyday.",
   metadataBase: new URL("https://nisabtoday.org"),
+  icons: { icon: "/favicon.ico" },
+  openGraph: { images: ["/opengraph-image.jpg"] },
   keywords: [
     "nissab",
     "nisab",

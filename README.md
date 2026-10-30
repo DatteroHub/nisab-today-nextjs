@@ -29,11 +29,26 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy on Cloudflare Pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is deployed to the Cloudflare Pages project `nisab-today-nextjs` using `@cloudflare/next-on-pages`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The adapter runs `vercel build` internally to create the `.vercel/output` files that it converts for Cloudflare Pages. This does not deploy the app to Vercel and does not require a Vercel account.
+
+For the first deploy from a new computer, install dependencies and authenticate Wrangler:
+
+```sh
+npm install
+npx wrangler login
+```
+
+Then build and deploy with:
+
+```sh
+npm run pages:deploy
+```
+
+The command builds the Next.js app for Cloudflare Pages and uploads it to `nisab-today-nextjs`. Run the same command whenever you want to redeploy manually. If the Cloudflare Pages project is connected to the production Git branch, pushing a commit to that branch also triggers a deployment automatically.
 
 ## Currency and country pages
 
@@ -55,7 +70,7 @@ Copy `.env.example` to `.env.local` only when creating a new environment. Preser
 
 Deploy the Cloudflare backend first, then this frontend. The new backend endpoint reads existing KV snapshots directly; no migration or backfill is required. Until the backend is deployed, the historical chart displays an unavailable state and retry button. Current prices and history handle errors independently.
 
-`@cloudflare/next-on-pages` is pinned to the project's original `1.13.2`: newer releases selected by the former caret range have incompatible Next.js peer requirements. This change retains Next 14.2.5 and the existing deployment adapter. Both are older dependencies; upgrading them is a separate maintenance task (npm reports a security advisory for the existing Next version).
+`@cloudflare/next-on-pages` is pinned to `1.13.2` because newer releases have incompatible Next.js peer requirements. Next.js and `eslint-config-next` are pinned to the patched `14.2.35` release. The adapter uses Vercel CLI to create its build output, but deploys to Cloudflare Pages through Wrangler.
 
 ### Checks
 

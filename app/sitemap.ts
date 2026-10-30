@@ -7,6 +7,8 @@ import {
   SITE_URL,
 } from "@/lib/destinations";
 
+export const runtime = "edge";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: SITE_URL, changeFrequency: "daily", priority: 1 },
