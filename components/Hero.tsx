@@ -15,6 +15,7 @@ const Hero = () => {
           />
         </a>
       </div>
+      {/* Todo less space here on mobile */}
       <div className="grid gap-3 items-center">
         <h3 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
           Nisab Today

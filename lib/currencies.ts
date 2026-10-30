@@ -274,6 +274,8 @@ export const detailedCurrencies: Record<string, CurrencyDetails> = {
     countries: [
       "Austria",
       "Belgium",
+      "Bulgaria",
+      "Croatia",
       "Cyprus",
       "Estonia",
       "Finland",

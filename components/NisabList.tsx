@@ -1,5 +1,7 @@
 "use client";
 import { Search, Weight } from "lucide-react";
+import Link from "next/link";
+import { currencyPath, countries, countryPath } from "@/lib/destinations";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { useEffect, useMemo, useState } from "react";
@@ -28,7 +30,7 @@ type SingleNisab = {
 };
 
 const NisabList = () => {
-  const { data, isPending } = useGetNisabs();
+  const { data, isPending, isError, refetch } = useGetNisabs();
 
   const [nisabs, setNisabs] = useState<SingleNisab[]>([]);
   const [selectedMetal, setSelectedMetal] = useState("gold");
@@ -63,7 +65,7 @@ const NisabList = () => {
         item.currency_code.toLowerCase().includes(searchString) ||
         item.currency_symbol.toLowerCase().includes(searchString) ||
         item.countries.some((country) =>
-          country.toLowerCase().includes(searchString)
+          country.toLowerCase().includes(searchString),
         )
       );
     });
@@ -113,7 +115,21 @@ const NisabList = () => {
           orientation="vertical"
           className="sticky hidden lg:block top-10 mx-4 mt-2 h-64 w-0.5 rounded-full bg-slate-200"
         />
-        {isPending || !nisabs.length ? (
+        {isError ? (
+          <div
+            role="alert"
+            className="w-full rounded-3xl border p-8 text-center"
+          >
+            <p>Prices are temporarily unavailable.</p>
+            <Button
+              variant="outline"
+              className="mt-4"
+              onClick={() => refetch()}
+            >
+              Try again
+            </Button>
+          </div>
+        ) : isPending ? (
           <div className="w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {Array.from(Array(8)).map((_, index) => {
               return <Skeleton key={index} className="h-56 rounded-3xl" />;
@@ -136,7 +152,12 @@ const NisabList = () => {
                       {currency.currency_symbol}
                     </Badge>
                     <CardTitle className="flex text-sm">
-                      {currency.currency_code}
+                      <Link
+                        href={currencyPath(currency.currency_code)}
+                        className="hover:underline"
+                      >
+                        {currency.currency_code}
+                      </Link>
                     </CardTitle>
                     <CardDescription>{currency.currency_name}</CardDescription>
                   </CardHeader>
@@ -146,7 +167,13 @@ const NisabList = () => {
                       ? formatPrice(currency.gold)
                       : formatPrice(currency.silver)}
                   </CardContent>
-                  <CardFooter className="justify-center">
+                  <CardFooter className="flex-wrap justify-center gap-1">
+                    <Link
+                      href={currencyPath(currency.currency_code)}
+                      className="text-xs underline underline-offset-4"
+                    >
+                      Details & history
+                    </Link>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -157,7 +184,27 @@ const NisabList = () => {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-fit max-w-60 text-sm text-muted-foreground border-gray-600">
-                        {currency.countries.join(", ")}
+                        <ul className="grid gap-2">
+                          {countries
+                            .filter(
+                              (country) =>
+                                country.currency === currency.currency_code,
+                            )
+                            .map((country) => (
+                              <li key={country.slug}>
+                                <Link
+                                  href={countryPath(country.slug)}
+                                  className="hover:underline"
+                                >
+                                  {country.name}
+                                </Link>
+                              </li>
+                            ))}
+                          {!countries.some(
+                            (country) =>
+                              country.currency === currency.currency_code,
+                          ) && <li>{currency.countries.join(", ")}</li>}
+                        </ul>
                       </PopoverContent>
                     </Popover>
                   </CardFooter>
@@ -165,6 +212,11 @@ const NisabList = () => {
               );
             })}
           </div>
+        )}
+        {!isPending && !isError && !filteredData.length && (
+          <p role="status" className="p-6 text-muted-foreground">
+            No matching currencies found.
+          </p>
         )}
       </div>
     </div>

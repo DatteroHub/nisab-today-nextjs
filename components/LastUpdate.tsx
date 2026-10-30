@@ -12,7 +12,9 @@ import { format, formatDistanceToNow } from "date-fns";
 import { useGetNisabs } from "@/utils/hooks/useGetNisabs";
 
 const LastUpdate = () => {
-  const { data, isPending } = useGetNisabs();
+  const { data, isPending, isError } = useGetNisabs();
+
+  if (isError) return <p className="text-sm text-muted-foreground">Update time unavailable</p>;
 
   return (
     <>
