@@ -7,7 +7,6 @@ import { detailedCurrencies } from "@/lib/currencies";
 
 export const metadata = { alternates: { canonical: "/" } };
 
-export const runtime = "edge";
 
 export default function Home() {
   return (

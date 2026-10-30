@@ -63,6 +63,8 @@ export default function HistoryChart({ currency }: { currency: string }) {
     staleTime: 60 * 60 * 1000,
     retry: 1,
   });
+  // The chart range is intentionally relative to the current UTC day.
+  // eslint-disable-next-line react-hooks/purity
   const cutoff =
     Math.floor(Date.now() / 86400000) * 86400 - (period - 1) * 86400;
   const points = (data?.points || []).filter(

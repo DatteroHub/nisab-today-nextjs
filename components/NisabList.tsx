@@ -4,7 +4,7 @@ import Link from "next/link";
 import { currencyPath, countries, countryPath } from "@/lib/destinations";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { detailedCurrencies, orderedCurrencies } from "@/lib/currencies";
 import {
   Card,
@@ -32,29 +32,18 @@ type SingleNisab = {
 const NisabList = () => {
   const { data, isPending, isError, refetch } = useGetNisabs();
 
-  const [nisabs, setNisabs] = useState<SingleNisab[]>([]);
+  const nisabs = useMemo<SingleNisab[]>(() => {
+    if (!data?.nisab) return [];
+    return orderedCurrencies.flatMap((currency) => {
+      const values = data.nisab[currency];
+      const details = detailedCurrencies[currency];
+      return values && details
+        ? [{ ...details, gold: values.gold, silver: values.silver }]
+        : [];
+    });
+  }, [data]);
   const [selectedMetal, setSelectedMetal] = useState("gold");
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    // format data
-    const nisabs: SingleNisab[] = [];
-    if (data && data.nisab !== undefined) {
-      orderedCurrencies.forEach((currency) => {
-        if (
-          data.nisab[currency] !== undefined &&
-          detailedCurrencies[currency] !== undefined
-        ) {
-          nisabs.push({
-            ...detailedCurrencies[currency],
-            gold: data.nisab[currency].gold,
-            silver: data.nisab[currency].silver,
-          });
-        }
-      });
-      setNisabs(nisabs);
-    }
-  }, [data]);
 
   // filter on search input
   const filteredData = useMemo(() => {

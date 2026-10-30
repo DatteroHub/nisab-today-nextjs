@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCurrency } from "@/lib/destinations";
 import { fetchNisabApi, HistoryPage } from "@/lib/nisab-api";
 
-export const runtime = "edge";
 
 export async function GET(
   request: NextRequest,

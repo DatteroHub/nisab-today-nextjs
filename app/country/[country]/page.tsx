@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { getCountry } from "@/lib/destinations";
 import NisabDetail, { detailMetadata } from "@/components/NisabDetail";
 
-export const runtime = "edge";
 type Props = { params: { country: string } };
 function resolveCountry(slug: string) {
   const country = getCountry(slug);

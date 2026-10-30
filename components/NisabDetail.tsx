@@ -51,6 +51,8 @@ export default async function NisabDetail({ currency, country }: DetailProps) {
     (item) => item.currency === currency && item.slug !== country?.slug,
   );
   const snapshot = await getCurrencySnapshot(currency).catch(() => null);
+  // Snapshot freshness is intentionally evaluated at request time.
+  // eslint-disable-next-line react-hooks/purity
   const stale =
     snapshot && Date.now() / 1000 - snapshot.timestamp > 48 * 60 * 60;
   const updated = snapshot

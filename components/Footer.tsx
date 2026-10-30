@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="grid lg:flex gap-8 lg:gap-24">
         <div className="grid">
           <div className="grid items-center">
-            <a href="/">
+            <Link href="/">
               <Image
                 src="/logo.svg"
                 alt="zakat today logo"
@@ -16,7 +16,7 @@ const Footer = () => {
                 height="48"
                 className="w-16"
               />
-            </a>
+            </Link>
           </div>
           <div className="text-lg mt-1 font-bold bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
             Nisab Today

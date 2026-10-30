@@ -1,4 +1,5 @@
 import "server-only";
+import { env as cloudflareEnv } from "cloudflare:workers";
 
 export type NisabPrice = { gold: number; silver: number };
 export type NisabSnapshot = {
@@ -19,16 +20,22 @@ export type HistoryPage = {
 };
 
 export async function fetchNisabApi<T>(path: string): Promise<T> {
-  const apiKey = process.env.NISAB_API_KEY;
+  // Worker secrets are available through cloudflare:workers. Keep the
+  // process.env fallback for local dotenv-based development and builds.
+  const runtimeEnv = cloudflareEnv;
+  const apiKey = runtimeEnv.NISAB_API_KEY ?? process.env.NISAB_API_KEY;
   if (!apiKey) throw new Error("Nisab API is not configured");
-  const base = process.env.NISAB_API_URL || "https://api.nisabtoday.org";
+  const base =
+    runtimeEnv.NISAB_API_URL ??
+    process.env.NISAB_API_URL ??
+    "https://api.nisabtoday.org";
   const response = await fetch(`${base.replace(/\/$/, "")}${path}`, {
     headers: { "x-api-key": apiKey },
     cache: "no-store",
     signal: AbortSignal.timeout(15000),
   });
   if (!response.ok) throw new Error("Nisab API is unavailable");
-  const json = await response.json();
+  const json = (await response.json()) as { success?: boolean; data?: T };
   if (!json.success || !json.data)
     throw new Error("Nisab API returned no data");
   return json.data as T;

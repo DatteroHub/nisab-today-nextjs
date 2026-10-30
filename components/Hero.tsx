@@ -1,11 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import LastUpdate from "./LastUpdate";
 
 const Hero = () => {
   return (
     <div className="grid lg:flex w-full gap-8 mb-8 lg:mb-20 justify-start px-4 pt-2 lg:px-0 lg:pt-0">
       <div className="grid items-center">
-        <a href="/">
+        <Link href="/">
           <Image
             src="/logo.svg"
             alt="zakat today logo"
@@ -13,7 +14,7 @@ const Hero = () => {
             height="56"
             className="w-28"
           />
-        </a>
+        </Link>
       </div>
       {/* Todo less space here on mobile */}
       <div className="grid gap-3 items-center">

@@ -29,26 +29,24 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Cloudflare Pages
+## Deploy on Cloudflare Workers
 
-This project is deployed to the Cloudflare Pages project `nisab-today-nextjs` using `@cloudflare/next-on-pages`.
-
-The adapter runs `vercel build` internally to create the `.vercel/output` files that it converts for Cloudflare Pages. This does not deploy the app to Vercel and does not require a Vercel account.
-
-For the first deploy from a new computer, install dependencies and authenticate Wrangler:
+This app uses vinext and deploys to the Cloudflare Worker `nisab-today-nextjs`. Use the Node.js version in `.nvmrc` (24.22.0), then install dependencies and authenticate Cloudflare:
 
 ```sh
-npm install
-npx wrangler login
+nvm install
+nvm use
+yarn install
+yarn cf auth login
 ```
 
 Then build and deploy with:
 
 ```sh
-npm run pages:deploy
+yarn deploy
 ```
 
-The command builds the Next.js app for Cloudflare Pages and uploads it to `nisab-today-nextjs`. Run the same command whenever you want to redeploy manually. If the Cloudflare Pages project is connected to the production Git branch, pushing a commit to that branch also triggers a deployment automatically.
+Run `yarn dev` for local development and `yarn deploy` to build and deploy the Worker. Configure `NISAB_API_KEY` as a Worker secret in Cloudflare; set `NISAB_API_URL` as a Worker variable if using a different API origin. For local development, put these values in `.env.local`.
 
 ## Currency and country pages
 
@@ -68,15 +66,17 @@ Copy `.env.example` to `.env.local` only when creating a new environment. Preser
 - `NISAB_API_KEY`: existing server-side API key.
 - `NISAB_API_URL`: optional API origin; defaults to `https://api.nisabtoday.org`.
 
+In Cloudflare Workers, the app reads secrets and variables through `cloudflare:workers`. Local development may use `.env.local` as a fallback.
+
 Deploy the Cloudflare backend first, then this frontend. The new backend endpoint reads existing KV snapshots directly; no migration or backfill is required. Until the backend is deployed, the historical chart displays an unavailable state and retry button. Current prices and history handle errors independently.
 
-`@cloudflare/next-on-pages` is pinned to `1.13.2` because newer releases have incompatible Next.js peer requirements. Next.js and `eslint-config-next` are pinned to the patched `14.2.35` release. The adapter uses Vercel CLI to create its build output, but deploys to Cloudflare Pages through Wrangler.
+The app runs Next.js-compatible APIs through vinext on Vite. Cloudflare bindings are accessed through `cloudflare:workers`.
 
 ### Checks
 
 ```sh
-npx tsc --noEmit
-npm run build
+yarn typecheck
+yarn build
 ```
 
 No production deployment was performed. The browser preview uses synthetic observations in a local Worker, not fabricated additions to the real database.

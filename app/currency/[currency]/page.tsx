@@ -2,7 +2,6 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { getCurrency, currencyPath } from "@/lib/destinations";
 import NisabDetail, { detailMetadata } from "@/components/NisabDetail";
 
-export const runtime = "edge";
 type Props = { params: { currency: string } };
 function resolveCurrency(slug: string) {
   const currency = getCurrency(slug.toLowerCase());
